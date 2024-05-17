@@ -1,6 +1,7 @@
 import { Layout } from "../../components/Layout";
-import { useTina } from "tinacms/dist/react";
+import { tinaField, useTina } from "tinacms/dist/react";
 import { client } from "../../tina/__generated__/client";
+import { TinaMarkdown } from "tinacms/dist/rich-text";
 
 export default function Home(props) {
   // data passes though in production mode and data is updated to the sidebar data in edit-mode
@@ -12,15 +13,9 @@ export default function Home(props) {
 
   return (
     <Layout>
-      <code>
-        <pre
-          style={{
-            backgroundColor: "lightgray",
-          }}
-        >
-          {JSON.stringify(data.post, null, 2)}
-        </pre>
-      </code>
+      <div data-tina-field={tinaField(data.post, "body")}>
+        <TinaMarkdown content={data.post.body} />
+      </div>
     </Layout>
   );
 }
